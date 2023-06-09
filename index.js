@@ -3,6 +3,7 @@ const app = express()
 const cors = require('cors')
 const port = process.env.PORT || 5000
 
+const news = require('./data/news.json');
 const categories = require('./data/categories.json')
 
 app.use(cors())
@@ -11,9 +12,23 @@ app.get('/', (req, res) => {
     res.send('The Dragon News Server.')
 })
 
+app.get('/news', (req, res) => {
+    res.send(news)
+})
 app.get('/categories', (req, res) => {
     res.send(categories)
-    console.log(categories);
+})
+
+app.get('/news/:title', (req, res) => {
+    const title = req.params.title
+    console.log(title);
+    const newsItem = news.find(item => item.title === title)
+    console.log(newsItem);
+    if (newsItem) {
+        res.send(newsItem)
+    } else {
+        res.status(404).send('News item not found')
+    }
 })
 
 app.listen(port, () => {
