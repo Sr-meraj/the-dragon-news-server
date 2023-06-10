@@ -18,12 +18,19 @@ app.get('/news', (req, res) => {
 app.get('/categories', (req, res) => {
     res.send(categories)
 })
+app.get('/category/:id', (req, res) => {
+    const category = parseInt(req.params.id)
+    if (category === 0) {
+        res.send(news)
+    } else {
+        const filteredNews = news.filter(news => parseInt(news.category_id) === category)
+        res.send(filteredNews)
+    }
+})
 
 app.get('/news/:title', (req, res) => {
     const title = req.params.title
-    console.log(title);
     const newsItem = news.find(item => item.title === title)
-    console.log(newsItem);
     if (newsItem) {
         res.send(newsItem)
     } else {
