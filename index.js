@@ -18,6 +18,7 @@ app.get('/news', (req, res) => {
 app.get('/categories', (req, res) => {
     res.send(categories)
 })
+
 app.get('/category/:id', (req, res) => {
     const category = parseInt(req.params.id)
     if (category === 0) {
@@ -28,9 +29,9 @@ app.get('/category/:id', (req, res) => {
     }
 })
 
-app.get('/news/:title', (req, res) => {
-    const title = req.params.title
-    const newsItem = news.find(item => item.title === title)
+app.get('/news/:id', (req, res) => {
+    const id = req.params.id
+    const newsItem = news.find(item => item._id === id)
     if (newsItem) {
         res.send(newsItem)
     } else {
